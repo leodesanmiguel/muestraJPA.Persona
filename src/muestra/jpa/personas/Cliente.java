@@ -9,6 +9,7 @@ import java.io.Serializable;
 
 import java.util.Date;
 import java.util.List;
+import javax.persistence.CascadeType;
 
 import javax.persistence.Entity;
 
@@ -29,7 +30,7 @@ public class Cliente extends Persona implements Serializable {
     private Date fechaAlta;
     //private String forma1Pago;
     //@OneToMany(mappedBy = "cliente_forma", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private FormaD1Pago formaD1Pago;
     public Cliente() {
 

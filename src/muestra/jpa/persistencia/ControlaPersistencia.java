@@ -18,6 +18,9 @@ public class ControlaPersistencia {
     PersonaJpaController persJPA = new PersonaJpaController();
     ClienteJpaController cliJPA = new ClienteJpaController();
     EmpleadoJpaController empJPA = new EmpleadoJpaController();
+    FormaD1PagoJpaController fd1JPA = new FormaD1PagoJpaController();
+    FormaDPagoJpaController fdpJPA= new FormaDPagoJpaController();
+    
 
     public boolean crearClienteJPA(Cliente pp) {
 

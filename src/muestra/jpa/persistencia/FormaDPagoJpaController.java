@@ -11,6 +11,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
+import javax.persistence.Persistence;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import muestra.jpa.persistencia.exceptions.NonexistentEntityException;
@@ -26,6 +27,10 @@ public class FormaDPagoJpaController implements Serializable {
         this.emf = emf;
     }
     private EntityManagerFactory emf = null;
+    
+        public FormaDPagoJpaController() {
+        this.emf = Persistence.createEntityManagerFactory("personaPU");
+    }
 
     public EntityManager getEntityManager() {
         return emf.createEntityManager();
