@@ -9,10 +9,10 @@ import java.io.Serializable;
 
 import java.util.Date;
 import java.util.List;
-import javax.persistence.CascadeType;
+
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.OneToMany;
+
+import javax.persistence.OneToOne;
 
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -27,9 +27,10 @@ public class Cliente extends Persona implements Serializable {
     private String tipoCliente;
     @Temporal(TemporalType.DATE)
     private Date fechaAlta;
-    private String forma1Pago;
+    //private String forma1Pago;
     //@OneToMany(mappedBy = "cliente_forma", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    //private List<FormaDPago> formasDPago;
+    @OneToOne
+    private FormaD1Pago formaD1Pago;
     public Cliente() {
 
     }
@@ -47,28 +48,31 @@ public class Cliente extends Persona implements Serializable {
     }
 
     public Cliente(String tipoCliente, Date fechaAlta,
-            List<FormaDPago> formasDPago, String forma1pago,
+            List<FormaDPago> formasDPago, String forma1pago, FormaD1Pago formaD1Pago,
             String nombre, String apellido, int dni,
             Date fechaNacio, String paisOrigen, String celular, String email) {
         super(nombre, apellido, dni, fechaNacio, paisOrigen, celular, email);
         this.tipoCliente = tipoCliente;
         this.fechaAlta = fechaAlta;
         //this.formasDPago = formasDPago;
-        this.forma1Pago = forma1pago;
+        //this.forma1Pago = forma1pago;
+        this.formaD1Pago = formaD1Pago;
     }
 
-    public String getForma1Pago() {
-        return forma1Pago;
+    
+    
+    public FormaD1Pago getFormaD1Pago() {
+        return formaD1Pago;
     }
 
-    public void setForma1Pago(String forma1Pago) {
-        this.forma1Pago = forma1Pago;
+    public void setFormaD1Pago(FormaD1Pago formaD1Pago) {
+        this.formaD1Pago = formaD1Pago;
     }
 
     
     
     
-    /*
+    /*  ESTO ES PARA UNA LISTA DE PAGOS
     public List<FormaDPago> getFormasDPago() {
         return formasDPago;
     }

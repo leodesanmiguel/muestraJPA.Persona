@@ -44,7 +44,9 @@ public class Control {
         formasP.add(f2);
         formasP.add(f3);
 
-        Cliente c1 = new Cliente("PAGADOR", alta, formasP, "CASI EFECTIVO",
+        FormaD1Pago f4 = new FormaD1Pago(400, "QUE ME SALGA LO QUE SEA");
+        
+        Cliente c1 = new Cliente("PAGADOR", alta, formasP, "CASI EFECTIVO", f4,
                 "José", "Pagador", 4565785, nacio, "argentino", "1165325421", "paga.primero@gmail.com");
         //Cliente c1 = new Cliente("PAGADOR", alta, formasP,
         //        "José", "Pagador", 4565785, nacio, "argentino", "1165325421", "paga.primero@gmail.com");
