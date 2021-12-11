@@ -12,6 +12,7 @@ import java.util.List;
 import javax.persistence.CascadeType;
 
 import javax.persistence.Entity;
+import javax.persistence.OneToMany;
 
 import javax.persistence.OneToOne;
 
@@ -32,6 +33,10 @@ public class Cliente extends Persona implements Serializable {
     //@OneToMany(mappedBy = "cliente_forma", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @OneToOne(cascade = CascadeType.ALL)
     private FormaD1Pago formaD1Pago;
+    
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<FormaDPago> formasDP;
+    
     public Cliente() {
 
     }
@@ -49,13 +54,13 @@ public class Cliente extends Persona implements Serializable {
     }
 
     public Cliente(String tipoCliente, Date fechaAlta,
-            List<FormaDPago> formasDPago, String forma1pago, FormaD1Pago formaD1Pago,
+            List<FormaDPago> formasDP, String forma1pago, FormaD1Pago formaD1Pago,
             String nombre, String apellido, int dni,
             Date fechaNacio, String paisOrigen, String celular, String email) {
         super(nombre, apellido, dni, fechaNacio, paisOrigen, celular, email);
         this.tipoCliente = tipoCliente;
         this.fechaAlta = fechaAlta;
-        //this.formasDPago = formasDPago;
+        this.formasDP = formasDP;
         //this.forma1Pago = forma1pago;
         this.formaD1Pago = formaD1Pago;
     }
@@ -73,15 +78,15 @@ public class Cliente extends Persona implements Serializable {
     
     
     
-    /*  ESTO ES PARA UNA LISTA DE PAGOS
+    //  ESTO ES PARA UNA LISTA DE PAGOS
     public List<FormaDPago> getFormasDPago() {
-        return formasDPago;
+        return formasDP;
     }
 
-    public void setFormasDPago(List<FormaDPago> formasDPago) {
-        this.formasDPago = formasDPago;
+    public void setFormasDPago(List<FormaDPago> formasDP) {
+        this.formasDP = formasDP;
     }
-     */
+     //
     public String getTipoCliente() {
         return tipoCliente;
     }
