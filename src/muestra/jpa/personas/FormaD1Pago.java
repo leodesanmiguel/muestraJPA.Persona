@@ -21,7 +21,7 @@ import javax.persistence.Table;
 public class FormaD1Pago implements Serializable {
     
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idForma;
     
     private String formade1Pago;
