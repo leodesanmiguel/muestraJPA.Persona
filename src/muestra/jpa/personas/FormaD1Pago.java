@@ -30,9 +30,9 @@ public class FormaD1Pago implements Serializable {
 
     }
 
-    public FormaD1Pago(int idForma, String formade1Pago) {
+    public FormaD1Pago( String formade1Pago) {
         this.formade1Pago = formade1Pago;
-        this.idForma = idForma;
+        //this.idForma = idForma;
     }
 
     public int getIdForma() {

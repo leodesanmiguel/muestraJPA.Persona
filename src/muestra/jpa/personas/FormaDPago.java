@@ -7,6 +7,8 @@ package muestra.jpa.personas;
 
 import java.io.Serializable;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -28,17 +30,29 @@ public class FormaDPago implements Serializable {
     private int idFormaDPago;
     private String medioDPago;
     
-    //@Enumerated(EnumType.ORDINAL)
-    //private MetodoDPago medioDPago;
+    
+    @Enumerated(EnumType.ORDINAL)
+    private MetodoDPago medioDEPago;
 
     public FormaDPago() {
     }
 
-    public FormaDPago(int idFormaDPago, String medioDPago) {
-        this.idFormaDPago = idFormaDPago;
+    public FormaDPago( String medioDPago, MetodoDPago medioDEPago) {
+        //this.idFormaDPago = idFormaDPago;
         this.medioDPago = medioDPago;
+        this.medioDEPago = medioDEPago;
     }
 
+    public MetodoDPago getMedioDEPago() {
+        return medioDEPago;
+    }
+
+    public void setMedioDEPago(MetodoDPago medioDEPago) {
+        this.medioDEPago = medioDEPago;
+    }
+
+    
+    
     public int getIdFormaDPago() {
         return idFormaDPago;
     }

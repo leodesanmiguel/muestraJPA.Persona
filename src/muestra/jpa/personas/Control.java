@@ -22,6 +22,10 @@ public class Control {
         Date nacio = new Date(1995, 11, 11);
         Date alta = new Date(2019, 5, 10);
 
+        Date nacio2 = new Date(1600, 1, 1);
+        Date alta2 = new Date(1719, 8, 21);
+
+        
         List<FormaDPago> formasP = new ArrayList<>();
 
         /*
@@ -37,22 +41,29 @@ public class Control {
         formasP.add(pagoMonedero);
         formasP.add(pagoTransferencia);
          */
-        FormaDPago f1 = new FormaDPago(100, "EFECTIVO");
-        FormaDPago f2 = new FormaDPago(200, "OTRA COSA");
-        FormaDPago f3 = new FormaDPago(300, "CANJE");
+        FormaDPago f1 = new FormaDPago( "EFECTIVO", MetodoDPago.EFECTIVO);
+        FormaDPago f2 = new FormaDPago( "OTRA COSA", MetodoDPago.MONEDERO);
+        FormaDPago f3 = new FormaDPago( "CANJE", MetodoDPago.TRANSFERENCIA);
         formasP.add(f1);
         formasP.add(f2);
         formasP.add(f3);
+        
+        
 
-        FormaD1Pago f4 = new FormaD1Pago(400, "QUE ME SALGA LO QUE SEA");
+        FormaD1Pago f4 = new FormaD1Pago( "Para pagar con las monedas");
+        FormaD1Pago f5 = new FormaD1Pago( "Que dios te lo pague");
         
         Cliente c1 = new Cliente("PAGADOR", alta, formasP, "CASI EFECTIVO", f4,
                 "José", "Pagador", 4565785, nacio, "argentino", "1165325421", "paga.primero@gmail.com");
-        //Cliente c1 = new Cliente("PAGADOR", alta, formasP,
-        //        "José", "Pagador", 4565785, nacio, "argentino", "1165325421", "paga.primero@gmail.com");
-
         if (!ctrl.crearClienteJPA(c1)) {
-            System.out.println(">>> AH PAPAª!! CON EL CLIENTE PAGADOR");
+            System.out.println(">>> UPA!! NO PASO EL CLIENTE 1");
+        }
+
+        Cliente c2 = new Cliente("PAGADOR COMPULSIVO", alta2, formasP, "CASI EFECTIVO", f5,
+                "CACHO", "CASTAÑA", 123456, nacio2, "ENAMORADO", "02320", "ELCACHO@gmail.com");
+
+        if (!ctrl.crearClienteJPA(c2)) {
+            System.out.println(">>> AH PAPAª!! CON EL CLIENTE << DOS >> ");
         }
 
     }
