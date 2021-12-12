@@ -25,7 +25,6 @@ public class Control {
         Date nacio2 = new Date(1600, 1, 1);
         Date alta2 = new Date(1719, 8, 21);
 
-        
         List<FormaDPago> formasP = new ArrayList<>();
 
         /*
@@ -41,18 +40,16 @@ public class Control {
         formasP.add(pagoMonedero);
         formasP.add(pagoTransferencia);
          */
-        FormaDPago f1 = new FormaDPago( "EFECTIVO", MetodoDPago.EFECTIVO);
-        FormaDPago f2 = new FormaDPago( "OTRA COSA", MetodoDPago.MONEDERO);
-        FormaDPago f3 = new FormaDPago( "CANJE", MetodoDPago.TRANSFERENCIA);
+        FormaDPago f1 = new FormaDPago("EFECTIVO", MetodoDPago.EFECTIVO);
+        FormaDPago f2 = new FormaDPago("OTRA COSA", MetodoDPago.MONEDERO);
+        FormaDPago f3 = new FormaDPago("CANJE", MetodoDPago.TRANSFERENCIA);
         formasP.add(f1);
         formasP.add(f2);
         formasP.add(f3);
-        
-        
 
-        FormaD1Pago f4 = new FormaD1Pago( "Para pagar con las monedas");
-        FormaD1Pago f5 = new FormaD1Pago( "Que dios te lo pague");
-        
+        FormaD1Pago f4 = new FormaD1Pago("Para pagar con las monedas");
+        FormaD1Pago f5 = new FormaD1Pago("Que dios te lo pague");
+
         Cliente c1 = new Cliente("PAGADOR", alta, formasP, "CASI EFECTIVO", f4,
                 "José", "Pagador", 4565785, nacio, "argentino", "1165325421", "paga.primero@gmail.com");
         if (!ctrl.crearClienteJPA(c1)) {
@@ -91,7 +88,18 @@ public class Control {
                 nacio, "argentino", "11988798", "Esteban.Quito123@gmail.com");
 
         if (!ctrl.crearEmpleadoJPA(e1)) {
-            System.out.println(">>> U.U.U TODO MAL CON EL EMPLEADO");
+            System.out.println(">>> U.U.U TODO MAL CON EL jobato");
+        }
+
+        Date nacio2 = new Date(1800, 1, 14);
+        Date alta2 = new Date(1910, 12, 25);
+
+        Empleado e2 = new Empleado(127, 150120.23, "LIBERTADOR",
+                "josejo", "SAN MARTIN", 1021225,
+                nacio, "argentino o español", "+1 2544 365", "libertador.de.america@gmail.com");
+
+        if (!ctrl.crearEmpleadoJPA(e2)) {
+            System.out.println(">>> TODO MAL CON EL libertador ****");
         }
 
     }
