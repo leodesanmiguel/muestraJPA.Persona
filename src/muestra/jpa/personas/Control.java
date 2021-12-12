@@ -5,10 +5,14 @@
  */
 package muestra.jpa.personas;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import muestra.jpa.persistencia.ControlaPersistencia;
+import org.eclipse.persistence.jpa.jpql.parser.DateTime;
 
 /**
  *
@@ -17,6 +21,9 @@ import muestra.jpa.persistencia.ControlaPersistencia;
 public class Control {
 
     ControlaPersistencia ctrl = new ControlaPersistencia();
+
+    Empleado vende1, vende2;
+    Cliente compra1, compra2;
 
     public void crearClienteCONPago() {
         Date nacio = new Date(1995, 11, 11);
@@ -54,6 +61,7 @@ public class Control {
                 "José", "Pagador", 4565785, nacio, "argentino", "1165325421", "paga.primero@gmail.com");
         if (!ctrl.crearClienteJPA(c1)) {
             System.out.println(">>> UPA!! NO PASO EL CLIENTE 1");
+            compra1 = c1;
         }
 
         Cliente c2 = new Cliente("PAGADOR COMPULSIVO", alta2, formasP, "CASI EFECTIVO", f5,
@@ -61,6 +69,7 @@ public class Control {
 
         if (!ctrl.crearClienteJPA(c2)) {
             System.out.println(">>> AH PAPAª!! CON EL CLIENTE << DOS >> ");
+            compra2 = c2;
         }
 
     }
@@ -89,6 +98,7 @@ public class Control {
 
         if (!ctrl.crearEmpleadoJPA(e1)) {
             System.out.println(">>> U.U.U TODO MAL CON EL jobato");
+            vende1 = e1;
         }
 
         Date nacio2 = new Date(1800, 1, 14);
@@ -100,6 +110,7 @@ public class Control {
 
         if (!ctrl.crearEmpleadoJPA(e2)) {
             System.out.println(">>> TODO MAL CON EL libertador ****");
+            vende2 = e2;
         }
 
     }
@@ -117,4 +128,29 @@ public class Control {
         }
 
     }
+
+    public void crearVentas() {
+
+        //var ahoraVta =  LocalDateTime.now();
+        //Date fecVta = new Date(ahoraVta.getYear(), ahoraVta.getMonthValue(), ahoraVta.getDayOfMonth());
+        Date ahoraVta = new Date(System.currentTimeMillis());
+
+        double importeTotal = 123654.23;
+        Date fechaVenta = ahoraVta;
+        //long horaVenta = ahoraVta.getTime();
+
+        Empleado vendedor = vende1;
+        Cliente comprador = compra1;
+
+        String contratacion= "PaqueteDigo";
+        boolean estaPago= true;
+
+        Venta vta= new Venta(importeTotal, fechaVenta, ahoraVta
+                , vendedor, comprador, contratacion, estaPago);
+        
+        if (!ctrl.crearVentaJPA(vta)) {
+            System.out.println("*** CONTROL ---> NO SE GUARDÓ LA VENTA *****");
+        }
+    }
+
 }
