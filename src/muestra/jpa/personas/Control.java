@@ -92,7 +92,7 @@ public class Control {
         Date nacio = new Date(1969, 5, 14);
         Date alta = new Date(2010, 12, 25);
 
-        Empleado e1 = new Empleado(123, 65468.23, "jobato",
+        Empleado e1 = new Empleado( 65468.23, "jobato",
                 "Esteban", "Quito", 16456789,
                 nacio, "argentino", "11988798", "Esteban.Quito123@gmail.com");
 
@@ -104,7 +104,7 @@ public class Control {
         Date nacio2 = new Date(1800, 1, 14);
         Date alta2 = new Date(1910, 12, 25);
 
-        Empleado e2 = new Empleado(127, 150120.23, "LIBERTADOR",
+        Empleado e2 = new Empleado( 150120.23, "LIBERTADOR",
                 "josejo", "SAN MARTIN", 1021225,
                 nacio, "argentino o español", "+1 2544 365", "libertador.de.america@gmail.com");
 

@@ -26,6 +26,7 @@ public class Principal {
         ctrlN.crearCliente();
         ctrlN.crearEmpleado();
         ctrlN.crearPersona();
+        ctrlN.crearVentas();
         
         
         

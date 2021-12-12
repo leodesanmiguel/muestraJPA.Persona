@@ -15,6 +15,7 @@ import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -24,6 +25,7 @@ import javax.persistence.TemporalType;
  * @author Leo Martinez
  */
 @Entity
+@Table(name = "cliente")
 public class Cliente extends Persona implements Serializable {
 
     private String tipoCliente;
@@ -36,6 +38,9 @@ public class Cliente extends Persona implements Serializable {
     
     @OneToMany(cascade = CascadeType.ALL)
     private List<FormaDPago> formasDP;
+    
+    @OneToMany(mappedBy = "comprador", cascade = CascadeType.ALL)
+    private List<Venta> compras;
     
     public Cliente() {
 
@@ -65,6 +70,16 @@ public class Cliente extends Persona implements Serializable {
         this.formaD1Pago = formaD1Pago;
     }
 
+    public List<Venta> getCompras() {
+        return compras;
+    }
+
+    public void setCompras(List<Venta> compras) {
+        this.compras = compras;
+    }
+
+    
+    
     
     
     public FormaD1Pago getFormaD1Pago() {

@@ -6,16 +6,17 @@
 package muestra.jpa.persistencia;
 
 import java.io.Serializable;
+import javax.persistence.Query;
+import javax.persistence.EntityNotFoundException;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
+import muestra.jpa.personas.Venta;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
-import javax.persistence.Query;
-import javax.persistence.EntityNotFoundException;
 import javax.persistence.Persistence;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Root;
 import muestra.jpa.persistencia.exceptions.NonexistentEntityException;
-import muestra.jpa.persistencia.exceptions.PreexistingEntityException;
 import muestra.jpa.personas.Empleado;
 
 /**
@@ -37,18 +38,31 @@ public class EmpleadoJpaController implements Serializable {
         return emf.createEntityManager();
     }
 
-    public void create(Empleado empleado) throws PreexistingEntityException, Exception {
+    public void create(Empleado empleado) {
+        if (empleado.getVentas() == null) {
+            empleado.setVentas(new ArrayList<Venta>());
+        }
         EntityManager em = null;
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            em.persist(empleado);
-            em.getTransaction().commit();
-        } catch (Exception ex) {
-            if (findEmpleado(empleado.getIdEmpleado()) != null) {
-                throw new PreexistingEntityException("Empleado " + empleado + " already exists.", ex);
+            List<Venta> attachedVentas = new ArrayList<Venta>();
+            for (Venta ventasVentaToAttach : empleado.getVentas()) {
+                ventasVentaToAttach = em.getReference(ventasVentaToAttach.getClass(), ventasVentaToAttach.getIdVenta());
+                attachedVentas.add(ventasVentaToAttach);
             }
-            throw ex;
+            empleado.setVentas(attachedVentas);
+            em.persist(empleado);
+            for (Venta ventasVenta : empleado.getVentas()) {
+                Empleado oldVendedorOfVentasVenta = ventasVenta.getVendedor();
+                ventasVenta.setVendedor(empleado);
+                ventasVenta = em.merge(ventasVenta);
+                if (oldVendedorOfVentasVenta != null) {
+                    oldVendedorOfVentasVenta.getVentas().remove(ventasVenta);
+                    oldVendedorOfVentasVenta = em.merge(oldVendedorOfVentasVenta);
+                }
+            }
+            em.getTransaction().commit();
         } finally {
             if (em != null) {
                 em.close();
@@ -61,12 +75,39 @@ public class EmpleadoJpaController implements Serializable {
         try {
             em = getEntityManager();
             em.getTransaction().begin();
+            Empleado persistentEmpleado = em.find(Empleado.class, empleado.getIdPersona());
+            List<Venta> ventasOld = persistentEmpleado.getVentas();
+            List<Venta> ventasNew = empleado.getVentas();
+            List<Venta> attachedVentasNew = new ArrayList<Venta>();
+            for (Venta ventasNewVentaToAttach : ventasNew) {
+                ventasNewVentaToAttach = em.getReference(ventasNewVentaToAttach.getClass(), ventasNewVentaToAttach.getIdVenta());
+                attachedVentasNew.add(ventasNewVentaToAttach);
+            }
+            ventasNew = attachedVentasNew;
+            empleado.setVentas(ventasNew);
             empleado = em.merge(empleado);
+            for (Venta ventasOldVenta : ventasOld) {
+                if (!ventasNew.contains(ventasOldVenta)) {
+                    ventasOldVenta.setVendedor(null);
+                    ventasOldVenta = em.merge(ventasOldVenta);
+                }
+            }
+            for (Venta ventasNewVenta : ventasNew) {
+                if (!ventasOld.contains(ventasNewVenta)) {
+                    Empleado oldVendedorOfVentasNewVenta = ventasNewVenta.getVendedor();
+                    ventasNewVenta.setVendedor(empleado);
+                    ventasNewVenta = em.merge(ventasNewVenta);
+                    if (oldVendedorOfVentasNewVenta != null && !oldVendedorOfVentasNewVenta.equals(empleado)) {
+                        oldVendedorOfVentasNewVenta.getVentas().remove(ventasNewVenta);
+                        oldVendedorOfVentasNewVenta = em.merge(oldVendedorOfVentasNewVenta);
+                    }
+                }
+            }
             em.getTransaction().commit();
         } catch (Exception ex) {
             String msg = ex.getLocalizedMessage();
             if (msg == null || msg.length() == 0) {
-                int id = empleado.getIdEmpleado();
+                int id = empleado.getIdPersona();
                 if (findEmpleado(id) == null) {
                     throw new NonexistentEntityException("The empleado with id " + id + " no longer exists.");
                 }
@@ -87,9 +128,14 @@ public class EmpleadoJpaController implements Serializable {
             Empleado empleado;
             try {
                 empleado = em.getReference(Empleado.class, id);
-                empleado.getIdEmpleado();
+                empleado.getIdPersona();
             } catch (EntityNotFoundException enfe) {
                 throw new NonexistentEntityException("The empleado with id " + id + " no longer exists.", enfe);
+            }
+            List<Venta> ventas = empleado.getVentas();
+            for (Venta ventasVenta : ventas) {
+                ventasVenta.setVendedor(null);
+                ventasVenta = em.merge(ventasVenta);
             }
             em.remove(empleado);
             em.getTransaction().commit();

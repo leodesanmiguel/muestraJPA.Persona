@@ -7,57 +7,71 @@ package muestra.jpa.personas;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
+import javax.persistence.CascadeType;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 /**
  *
  * @author Leo Martinez
  */
 @Entity
-//@PrimaryKeyJpoinColumn(name="idPersona")
+@Table(name = "empleado")
 public class Empleado extends Persona implements Serializable {
 
+    /*
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int idEmpleado;
-
+     */
+    
     private double sueldo;
     private String cargo;
+
+    @OneToMany(mappedBy = "vendedor", cascade = CascadeType.ALL)
+    private List<Venta> ventas;
 
     public Empleado() {
         super();
     }
 
-    public Empleado(int idEmpleado, double sueldo, String cargo,
+    public Empleado( double sueldo, String cargo,
             String nombre, String apellido,
             int dni, Date fechaNacio, String paisOrigen,
             String celular, String email) {
         super(nombre, apellido, dni, fechaNacio, paisOrigen,
                 celular, email);
-        this.idEmpleado = idEmpleado;
+        
         this.sueldo = sueldo;
         this.cargo = cargo;
     }
 
-    public Empleado(int idEmpleado, double sueldo, String cargo,
+    public Empleado( double sueldo, String cargo,
             int idPersona, String nombre, String apellido,
             int dni, Date fechaNacio, String paisOrigen,
             String celular, String email) {
         super(idPersona, nombre, apellido, dni, fechaNacio, paisOrigen,
                 celular, email);
-        this.idEmpleado = idEmpleado;
+        
         this.sueldo = sueldo;
         this.cargo = cargo;
     }
 
-    public int getIdEmpleado() {
-        return idEmpleado;
+    public List<Venta> getVentas() {
+        return ventas;
     }
 
-    public void setIdEmpleado(int idEmpleado) {
-        this.idEmpleado = idEmpleado;
+    public void setVentas(List<Venta> ventas) {
+        this.ventas = ventas;
     }
+
+    
 
     public double getSueldo() {
         return sueldo;
@@ -75,10 +89,6 @@ public class Empleado extends Persona implements Serializable {
         this.cargo = cargo;
     }
 
-    @Override
-    public String toString() {
-        return "Empleado: " + "idEmpleado=" + idEmpleado
-                + "\n cargo: " + cargo + " ($" + sueldo + ")";
-    }
+   
 
 }

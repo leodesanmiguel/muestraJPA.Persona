@@ -12,6 +12,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -26,7 +27,7 @@ import javax.persistence.TemporalType;
 public class Venta implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int idVenta;
 
     private double importeTotal;
@@ -37,10 +38,10 @@ public class Venta implements Serializable {
     @Temporal(TemporalType.TIME)
     private Date horaVenta;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     private Empleado vendedor;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     private Cliente comprador;
 
     private String contratacion;
@@ -52,8 +53,8 @@ public class Venta implements Serializable {
     }
 
     public Venta(double importeTotal, Date fechaVenta, Date horaVenta,
-             Empleado vendedor, Cliente comprador,
-             String contratacion, boolean estaPago) {
+            Empleado vendedor, Cliente comprador,
+            String contratacion, boolean estaPago) {
         this.importeTotal = importeTotal;
         this.fechaVenta = fechaVenta;
         this.horaVenta = horaVenta;
@@ -123,6 +124,4 @@ public class Venta implements Serializable {
         this.estaPago = estaPago;
     }
 
-    
-    
 }
