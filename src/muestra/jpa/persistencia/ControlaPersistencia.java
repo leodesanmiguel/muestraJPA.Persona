@@ -8,6 +8,7 @@ package muestra.jpa.persistencia;
 import muestra.jpa.personas.Cliente;
 import muestra.jpa.personas.Empleado;
 import muestra.jpa.personas.Persona;
+import muestra.jpa.personas.Venta;
 
 /**
  *
@@ -20,6 +21,7 @@ public class ControlaPersistencia {
     EmpleadoJpaController empJPA = new EmpleadoJpaController();
     FormaD1PagoJpaController fd1JPA = new FormaD1PagoJpaController();
     FormaDPagoJpaController fdpJPA= new FormaDPagoJpaController();
+    VentaJpaController vtaJPA = new VentaJpaController();
     
 
     public boolean crearClienteJPA(Cliente pp) {
@@ -53,6 +55,18 @@ public class ControlaPersistencia {
             return true;
         } catch (Exception e) {
             System.out.println("\n\n *** FALLO EN LA CARGA DE PERSONA\n\n" + e);
+        }
+
+        return false;
+    }        
+    
+        public boolean crearVentaJPA(Venta pp) {
+
+        try {
+            vtaJPA.create(pp);
+            return true;
+        } catch (Exception e) {
+            System.out.println("\n\n **** OJO CON LA V E N T A ****\n\n" + e);
         }
 
         return false;
