@@ -5,14 +5,12 @@
  */
 package muestra.jpa.personas;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import muestra.jpa.persistencia.ControlaPersistencia;
-import org.eclipse.persistence.jpa.jpql.parser.DateTime;
+
 
 /**
  *
@@ -34,19 +32,6 @@ public class Control {
 
         List<FormaDPago> formasP = new ArrayList<>();
 
-        /*
-        FormaDPago pagoEfectivo = new FormaDPago(1, MetodoDPago.EFECTIVO);
-        FormaDPago pagoDebito = new FormaDPago(2, MetodoDPago.DEBITO);
-        FormaDPago pagoCredito = new FormaDPago(3, MetodoDPago.CREDITO);
-        FormaDPago pagoMonedero = new FormaDPago(4, MetodoDPago.MONEDERO);
-        FormaDPago pagoTransferencia = new FormaDPago(5, MetodoDPago.TRANSFERENCIA);
-        
-        formasP.add(pagoEfectivo);
-        formasP.add(pagoDebito);
-        formasP.add(pagoCredito);
-        formasP.add(pagoMonedero);
-        formasP.add(pagoTransferencia);
-         */
         FormaDPago f1 = new FormaDPago("EFECTIVO", MetodoDPago.EFECTIVO);
         FormaDPago f2 = new FormaDPago("OTRA COSA", MetodoDPago.MONEDERO);
         FormaDPago f3 = new FormaDPago("CANJE", MetodoDPago.TRANSFERENCIA);
@@ -131,8 +116,6 @@ public class Control {
 
     public void crearVentas() {
 
-        //var ahoraVta =  LocalDateTime.now();
-        //Date fecVta = new Date(ahoraVta.getYear(), ahoraVta.getMonthValue(), ahoraVta.getDayOfMonth());
         Date ahoraVta = new Date(System.currentTimeMillis());
 
         double importeTotal = 123654.23;
