@@ -19,7 +19,7 @@ import muestra.jpa.personas.Persona;
 
 /**
  *
- * @author Leo Martinez
+ * @author profl
  */
 public class PersonaJpaController implements Serializable {
 
@@ -29,12 +29,8 @@ public class PersonaJpaController implements Serializable {
     private EntityManagerFactory emf = null;
 
     public PersonaJpaController() {
-        
         this.emf = Persistence.createEntityManagerFactory("personaPU");
-        
     }
-    
-    
 
     public EntityManager getEntityManager() {
         return emf.createEntityManager();
@@ -143,5 +139,5 @@ public class PersonaJpaController implements Serializable {
             em.close();
         }
     }
-    
+
 }

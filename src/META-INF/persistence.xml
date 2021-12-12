@@ -7,6 +7,7 @@
     <class>muestra.jpa.personas.Persona</class>
     <class>muestra.jpa.personas.FormaD1Pago</class>
     <class>muestra.jpa.personas.FormaDPago</class>
+    <class>muestra.jpa.personas.Venta</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/muestra_jpa_persona?serverTimezone=UTC"/>
       <property name="javax.persistence.jdbc.user" value="usrpolo"/>

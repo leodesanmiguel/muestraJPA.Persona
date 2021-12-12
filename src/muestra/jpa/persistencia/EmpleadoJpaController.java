@@ -15,6 +15,7 @@ import javax.persistence.Persistence;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import muestra.jpa.persistencia.exceptions.NonexistentEntityException;
+import muestra.jpa.persistencia.exceptions.PreexistingEntityException;
 import muestra.jpa.personas.Empleado;
 
 /**
@@ -36,13 +37,18 @@ public class EmpleadoJpaController implements Serializable {
         return emf.createEntityManager();
     }
 
-    public void create(Empleado empleado) {
+    public void create(Empleado empleado) throws PreexistingEntityException, Exception {
         EntityManager em = null;
         try {
             em = getEntityManager();
             em.getTransaction().begin();
             em.persist(empleado);
             em.getTransaction().commit();
+        } catch (Exception ex) {
+            if (findEmpleado(empleado.getIdEmpleado()) != null) {
+                throw new PreexistingEntityException("Empleado " + empleado + " already exists.", ex);
+            }
+            throw ex;
         } finally {
             if (em != null) {
                 em.close();
@@ -60,7 +66,7 @@ public class EmpleadoJpaController implements Serializable {
         } catch (Exception ex) {
             String msg = ex.getLocalizedMessage();
             if (msg == null || msg.length() == 0) {
-                int id = empleado.getIdPersona();
+                int id = empleado.getIdEmpleado();
                 if (findEmpleado(id) == null) {
                     throw new NonexistentEntityException("The empleado with id " + id + " no longer exists.");
                 }
@@ -81,7 +87,7 @@ public class EmpleadoJpaController implements Serializable {
             Empleado empleado;
             try {
                 empleado = em.getReference(Empleado.class, id);
-                empleado.getIdPersona();
+                empleado.getIdEmpleado();
             } catch (EntityNotFoundException enfe) {
                 throw new NonexistentEntityException("The empleado with id " + id + " no longer exists.", enfe);
             }

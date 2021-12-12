@@ -27,8 +27,8 @@ public class FormaDPagoJpaController implements Serializable {
         this.emf = emf;
     }
     private EntityManagerFactory emf = null;
-    
-        public FormaDPagoJpaController() {
+
+    public FormaDPagoJpaController() {
         this.emf = Persistence.createEntityManagerFactory("personaPU");
     }
 
@@ -139,5 +139,5 @@ public class FormaDPagoJpaController implements Serializable {
             em.close();
         }
     }
-    
+
 }

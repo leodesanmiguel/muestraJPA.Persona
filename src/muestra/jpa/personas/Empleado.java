@@ -9,6 +9,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Entity;
+import javax.persistence.Id;
 
 /**
  *
@@ -18,6 +19,7 @@ import javax.persistence.Entity;
 //@PrimaryKeyJpoinColumn(name="idPersona")
 public class Empleado extends Persona implements Serializable {
 
+    @Id
     private int idEmpleado;
 
     private double sueldo;
